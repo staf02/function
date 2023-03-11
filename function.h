@@ -140,7 +140,7 @@ struct function<R(Args...)> {
   }
 
   R operator()(Args... args) const {
-    if (!*this == true) {
+    if (!*this) {
       throw bad_function_call();
     }
 
@@ -166,9 +166,7 @@ struct function<R(Args...)> {
 private:
 
   void swap(function& other) noexcept {
-    auto tmp = std::move(*this);
-    *this = std::move(other);
-    other = std::move(tmp);
+    std::swap(*this, other);
   }
 
   type_descriptor<R, Args...> const* desc;
